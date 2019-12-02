@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Burnout Cars
+        </title>
+        <script type="text/javascript">
+            var urlString = window.location.href;
+            var url = new URL(urlString);
+            var make = url.searchParams.get("make");
+            var model = url.searchParams.get("model");
+            var year = url.searchParams.get("year");
+        </script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="css_style">
+    </head>
+    <body>
+        <div class="save_card">
+            <h1>Recent Car Details</h1>
+            <h2>Seller Details:</h2>
+            <table align="center">
+                <tr>
+                    <td>
+                        <strong>Seller Name :</strong>
+                    </td>
+                    <td>
+                        <label id="lblSellerName"></label>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Address :</strong>
+                    </td>
+                    <td>
+                        <label id="lblAddress"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>City :</strong>
+                    </td>
+                    <td>
+                        <label id="lblCity"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Phone Number :</strong>
+                    </td>
+                    <td>
+                        <label id="lblPhoneNumber"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Email Address :</strong>
+                    </td>
+                    <td>
+                        <label id="lblEmailAddress"></label>
+                    </td>
+                </tr>
+            </table>
+            <h2>Vehicle Details:</h2>
+            <table align="center">
+                <tr>
+                    <td>
+                        <strong>Make :</strong>
+                    </td>
+                    <td>
+                        <label id="lblMake"></label>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Model :</strong>
+                    </td>
+                    <td>
+                        <label id="lblModel"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Year :</strong>
+                    </td>
+                    <td>
+                        <label id="lblYear"></label>
+                    </td>
+                </tr>
+            </table>
+            <a href="index.html">Home</a>
+            <a href="" id="jdlink" target="_blank">Jd Power Link</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="new.html" target="_self">Add New Record</a>
+        </div>
+        <script>
+            document.getElementById('lblSellerName').innerHTML=url.searchParams.get("sellername");
+            document.getElementById('lblAddress').innerHTML=url.searchParams.get("address");
+            document.getElementById('lblCity').innerHTML=url.searchParams.get("city");
+            document.getElementById('lblPhoneNumber').innerHTML=url.searchParams.get("phonenumber");
+            document.getElementById('lblEmailAddress').innerHTML=url.searchParams.get("emailaddress");
+            document.getElementById('lblMake').innerHTML=url.searchParams.get("vehiclemake");
+            document.getElementById('lblModel').innerHTML=url.searchParams.get("vehiclemodel");
+            document.getElementById('lblYear').innerHTML=url.searchParams.get("vehicleyear");
+
+            var pairs = location.search.slice(1).split('&');
+    
+            var result = {};
+            pairs.forEach(function(pair) {
+                pair = pair.split('=');
+                result[pair[0]] = decodeURIComponent(pair[1] || '');
+            });
+            var Item=JSON.stringify(result);
+
+            var Items=[];
+            if(localStorage.getItem('Items')==null){
+                localStorage.setItem('Items',JSON.stringify(Items));
+            }else{
+                Items=JSON.parse(localStorage.getItem('Items'));
+                Items.push(Item);
+                alert(Items);
+                localStorage.setItem('Items',JSON.stringify(Items));
+            }
+
+            var link = document.getElementById('jdlink');
+            link.setAttribute('href',"https://www.jdpower.com/cars/"+url.searchParams.get("vehicleyear")+"/"+url.searchParams.get("vehiclemake")+"/"+url.searchParams.get("vehiclemodel"));
+        </script>
+    </body>
+</html>

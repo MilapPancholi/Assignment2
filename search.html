@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Burnout Cars
+        </title>
+        <link rel="stylesheet" type="text/css" href="style.css" title="css_style">
+    </head>
+    <body>
+        <div class="search_card">
+            <h1>Car Inventory</h1>
+            <a class="button" href="Index.html">Back to Home<a/>
+            <div style="text-align: center;">
+                <input type="text" name="search" placeholder="Search by name" id="search">
+                <button id="btnSearch" value="Search" onclick="search()">Search</button>
+            </div>
+
+            <table id="itemsTable">
+                <tr>
+                    <th>Seller Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                    <th>Vehicle Make</th>
+                    <th>Vehicle Model</th>
+                    <th>Vehicle Year</th>
+                    <th>JD Power Link</th>
+                </tr>
+            </table>
+        </div>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            tr:nth-child(odd){background-color: #ffffff}
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+        <script>
+            search();
+
+            function search(){
+                clearTable();
+                var searchText=document.getElementById('search');
+                var table = document.getElementById("itemsTable");
+                var Items=JSON.parse(localStorage.getItem('Items'));
+                for(var i = 0; i < Items.length; i++) {
+                    var Item = JSON.parse(Items[i]);
+                    if(Item["sellername"].includes(searchText.value,0)){
+                        var row=table.insertRow();
+                        for (var key in Item) {
+                            var cell = row.insertCell();
+                            cell.appendChild(document.createTextNode(Item[key].replace("+"," ")));
+                        }
+                        
+                        var Jdcell = row.insertCell();
+                        
+                        var JdLink="https://www.jdpower.com/cars/"+Item["vehicleyear"]+"/"+Item["vehiclemake"]+"/"+Item["vehiclemodel"]
+                        var a = document.createElement('a');
+                        var link = document.createTextNode(JdLink);
+                        a.appendChild(link);
+                        a.href =JdLink;
+                        a.target="_blank";
+
+                        Jdcell.appendChild(a);
+                    }
+                }
+
+                function clearTable(){
+                    var table = document.getElementById("itemsTable");
+                    var rowCount = table.rows.length;
+                    for (var i = rowCount - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
